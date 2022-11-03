@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"qqw123-1.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="####Vuex是什么？  所谓的Vuex其实就是一个为Vue.js设计的数据仓库，就是把各个组件公用的数据放到一个仓库里面进行统一的管理  ####Vuex好处  1.既使非父子组件间的数据共享也能变得简单明了2.让程序变得更加可维护（将数据抽离了出来）3.只要仓库里面的数据发生了变化，在其他组件里面数据被引用的地方也会自动更新  ####Vuex怎么用？  先用vue-cli安装项目框架  1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="VUEX Store问题">
+<meta property="og:url" content="http://qqw123-1.github.io/2022/11/03/vuex/index.html">
+<meta property="og:site_name" content="QQWQX">
+<meta property="og:description" content="####Vuex是什么？  所谓的Vuex其实就是一个为Vue.js设计的数据仓库，就是把各个组件公用的数据放到一个仓库里面进行统一的管理  ####Vuex好处  1.既使非父子组件间的数据共享也能变得简单明了2.让程序变得更加可维护（将数据抽离了出来）3.只要仓库里面的数据发生了变化，在其他组件里面数据被引用的地方也会自动更新  ####Vuex怎么用？  先用vue-cli安装项目框架  1">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-11-03T07:19:50.000Z">
+<meta property="article:modified_time" content="2022-11-03T08:32:31.360Z">
+<meta property="article:author" content="Qin QiWei">
+<meta property="article:tag" content="VUE">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://qqw123-1.github.io/2022/11/03/vuex/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>VUEX Store问题 | QQWQX</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://your-url" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">QQWQX</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">快乐工作，健康生活。</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/categories/about/" rel="section"><i class="fa fa-user fa-fw"></i>技术</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>生活记录</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://qqw123-1.github.io/2022/11/03/vuex/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Qin QiWei">
+      <meta itemprop="description" content="have a nice day">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="QQWQX">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          VUEX Store问题
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-11-03 15:19:50 / 修改时间：16:32:31" itemprop="dateCreated datePublished" datetime="2022-11-03T15:19:50+08:00">2022-11-03</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/about/" itemprop="url" rel="index"><span itemprop="name">about</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>####Vuex是什么？</p>
+<blockquote>
+<p>所谓的Vuex其实就是一个为Vue.js设计的数据仓库，就是把各个组件公用的数据放到一个仓库里面进行统一的管理</p>
+</blockquote>
+<p>####Vuex好处</p>
+<blockquote>
+<p>1.既使非父子组件间的数据共享也能变得简单明了<br>2.让程序变得更加可维护（将数据抽离了出来）<br>3.只要仓库里面的数据发生了变化，在其他组件里面数据被引用的地方也会自动更新</p>
+</blockquote>
+<p>####Vuex怎么用？</p>
+<blockquote>
+<p>先用vue-cli安装项目框架</p>
+</blockquote>
+<figure class="highlight llvm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g <span class="title">@vue</span>/cli 或 yarn <span class="keyword">global</span> <span class="keyword">add</span> <span class="title">@vue</span>/cli</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>安装Vuex</p>
+</blockquote>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm <span class="keyword">install </span>vuex --save 或 yarn <span class="keyword">add </span>vuex</span><br></pre></td></tr></table></figure>
+
+<p>####初始化store.js</p>
+<blockquote>
+<p>一般放到src&#x2F;store&#x2F;store.js下面</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">Vue</span> <span class="keyword">from</span> <span class="string">&quot;vue&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="title class_">Vuex</span> <span class="keyword">from</span> <span class="string">&quot;vuex&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="title class_">Vue</span>.<span class="title function_">use</span>(<span class="title class_">Vuex</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> store = <span class="keyword">new</span> <span class="title class_">Vuex</span>.<span class="title class_">Store</span>(&#123;</span><br><span class="line"> <span class="attr">state</span>: &#123;</span><br><span class="line">    <span class="attr">test</span>:<span class="string">&#x27;x&#x27;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">mutations</span>: &#123;</span><br><span class="line">    <span class="title function_">changetest</span>(<span class="params">state, xxx</span>) &#123;</span><br><span class="line">      state.<span class="property">test</span>= xxx</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">actions</span>:&#123;</span><br><span class="line">     <span class="title function_">changetest</span>(<span class="params">context, xxx</span>) &#123;</span><br><span class="line">      context.<span class="title function_">commit</span>(<span class="string">&#x27;changetest&#x27;</span>,xxx)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;，</span><br><span class="line">  <span class="attr">getters</span>: &#123;</span><br><span class="line">    <span class="attr">test2</span>: <span class="function"><span class="params">state</span> =&gt;</span> state.<span class="property">test</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;）</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> store;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>state</strong>：相当于Vue的data<br><strong>mutations</strong>：类似于事件，每个 mutation 都有一个字符串的事件类型 (type)和 一个回调函数 (handler)。这个回调函数就是我们实际进行状态更改的地方，并且它会接受 <strong>state</strong> 作为第一个参数<br><strong>actions</strong>: Action 类似于 mutation，不同在于Action 提交的是 mutation，而不是直接变更状态，Action 可以包含任意异步操作<br><strong>getters</strong>：可以认为是 store 的计算属性，就像计算属性一样，getter 的返回值会根据它的依赖被缓存起来，且只有当它的依赖值发生了改变才会被重新计算，接受 state 作为其第一个参数</p>
+</blockquote>
+<p>####使用Vuex</p>
+<blockquote>
+<p>打开main.js，导入，然后用</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">Vue</span> <span class="keyword">from</span> <span class="string">&quot;vue&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="title class_">App</span> <span class="keyword">from</span> <span class="string">&quot;./App.vue&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> store <span class="keyword">from</span> <span class="string">&quot;./store&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span><br><span class="line">  store,</span><br><span class="line">  <span class="attr">render</span>: <span class="function"><span class="params">h</span> =&gt;</span> <span class="title function_">h</span>(<span class="title class_">App</span>)</span><br><span class="line">&#125;).$mount(<span class="string">&quot;#app&quot;</span>);</span><br></pre></td></tr></table></figure>
+<ul>
+<li><input checked disabled type="checkbox"> <strong>如何使用 state</strong><br>子组件能通过 this.$store 访问到<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">this</span>.<span class="property">$store</span>.<span class="property">state</span>.<span class="property">test</span></span><br></pre></td></tr></table></figure></li>
+<li><input checked disabled type="checkbox"> <strong>如何使用 getters</strong><br>子组件能通过 this.$store.getters 访问到<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">this</span>.<span class="property">$store</span>.<span class="property">getters</span>.<span class="property">test2</span></span><br></pre></td></tr></table></figure></li>
+<li><input checked disabled type="checkbox"> <strong>如何使用 mutations</strong><br>它会去把 changetest 提交到 mutation 执行 ，第二个是载荷(可以理解为参数)，大多数载荷应该是一个对象，这样可以包含多个字段并且记录的 mutation 会更易读。<br>子组件能通过 this.$store.commit 访问到<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">this</span>.<span class="property">$store</span>.<span class="title function_">commit</span>(<span class="string">&#x27;changetest&#x27;</span>,xxx)</span><br></pre></td></tr></table></figure></li>
+<li><input checked disabled type="checkbox"> <strong>如何使用 actions</strong><br>它会去把 changetest 分发到 actions 在通过 actions 提交到 mutation 执行<br>子组件能通过 this.$store.dispatch 访问到<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">this</span>.<span class="property">$store</span>.<span class="title function_">dispatch</span>(<span class="string">&#x27;changetest&#x27;</span>xxx)</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>####dispatch()与commit()</p>
+<blockquote>
+<p>这两个的区别是存取的方式不同，两个都是传值给vuex的mutation改变state</p>
+</blockquote>
+<p>&#x3D;&#x3D;this.$store.commit()同步操作&#x3D;&#x3D;</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">this</span>.<span class="property">$store</span>.<span class="title function_">commit</span>(<span class="string">&quot;mutations方法名&quot;</span>,value)</span><br><span class="line"></span><br><span class="line"><span class="comment">//存值</span></span><br><span class="line"><span class="variable language_">this</span>.<span class="property">$store</span>.<span class="title function_">commit</span>(<span class="string">&#x27;changeValue&#x27;</span>,name)</span><br><span class="line"></span><br><span class="line"><span class="comment">//取值</span></span><br><span class="line"><span class="variable language_">this</span>.<span class="property">$store</span>.<span class="property">state</span>.<span class="property">changeValue</span></span><br></pre></td></tr></table></figure>
+
+
+<p>&#x3D;&#x3D;this.$store.dispatch()含有异步操作，可以向后台提交数据&#x3D;&#x3D;</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">this</span>.<span class="property">$store</span>.<span class="title function_">dispatch</span>(<span class="string">&quot;action的方法名&quot;</span>,value)</span><br><span class="line"></span><br><span class="line"><span class="comment">//存值</span></span><br><span class="line"><span class="variable language_">this</span>.<span class="property">$store</span>.<span class="title function_">dispatch</span>(<span class="string">&#x27;getlists&#x27;</span>,name)</span><br><span class="line"></span><br><span class="line"><span class="comment">//取值</span></span><br><span class="line"><span class="variable language_">this</span>.<span class="property">$store</span>.<span class="property">getters</span>.<span class="property">getlists</span></span><br></pre></td></tr></table></figure>
+<p><strong>实例</strong><br>在store&#x2F;modules文件夹里的user.js,声明user并释放出来。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> user = &#123;</span><br><span class="line">  <span class="attr">state</span>: &#123;</span><br><span class="line">    <span class="attr">token</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">    <span class="attr">roles</span>: <span class="literal">null</span>,</span><br><span class="line">    <span class="attr">isMasterAccount</span>:<span class="literal">true</span>,</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="attr">mutations</span>: &#123;</span><br><span class="line">    <span class="attr">SET_TOKEN</span>: <span class="function">(<span class="params">state, token</span>) =&gt;</span> &#123;</span><br><span class="line">      state.<span class="property">token</span> =<span class="string">&quot;Bearer &quot;</span> +token</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">actions</span>: &#123;</span><br><span class="line">    <span class="comment">// 登录</span></span><br><span class="line">    <span class="title class_">Login</span>(&#123;</span><br><span class="line">      commit</span><br><span class="line">    &#125;, userInfo) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="title function_">login</span>(userInfo.<span class="property">account</span>, userInfo.<span class="property">password</span>).<span class="title function_">then</span>(<span class="function"><span class="params">x</span> =&gt;</span> &#123;</span><br><span class="line">          <span class="keyword">if</span>(x.<span class="property">status</span>==<span class="number">200</span>)&#123;</span><br><span class="line">            <span class="keyword">const</span> tokenV = x.<span class="property">data</span>.<span class="property">token</span>.<span class="property">tokenValue</span></span><br><span class="line">            <span class="title function_">commit</span>(<span class="string">&#x27;SET_TOKEN&#x27;</span>, tokenV)</span><br><span class="line">            <span class="variable language_">document</span>.<span class="property">cookie</span>=<span class="string">`AuthInfo=Bearer <span class="subst">$&#123;tokenV&#125;</span>;path:/`</span>;</span><br><span class="line">            token=<span class="string">&quot;Bearer &quot;</span>+tokenV;</span><br><span class="line">            <span class="comment">//setToken(&quot;Bearer &quot; +token)</span></span><br><span class="line">            <span class="title function_">resolve</span>();</span><br><span class="line">          &#125;</span><br><span class="line"></span><br><span class="line">        &#125;).<span class="title function_">catch</span>(<span class="function"><span class="params">error</span> =&gt;</span> &#123;</span><br><span class="line">          <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;登录失败&quot;</span>)</span><br><span class="line">          <span class="title function_">reject</span>(error)</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>注：必须要用commit(‘SET_TOKEN’, tokenV)调用mutations里的方法，才能在store存储成功。</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">handleLogin</span>(<span class="params"></span>) &#123;</span><br><span class="line">   <span class="variable language_">this</span>.<span class="property">loading</span> = <span class="literal">true</span></span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">$store</span>.<span class="title function_">dispatch</span>(<span class="string">&#x27;Login&#x27;</span>, <span class="variable language_">this</span>.<span class="property">loginForm</span>).<span class="title function_">then</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">                <span class="variable language_">this</span>.<span class="property">$router</span>.<span class="title function_">push</span>(&#123;</span><br><span class="line">                    <span class="attr">path</span>: <span class="string">&#x27;/manage/merchant/account&#x27;</span></span><br><span class="line">                &#125;); <span class="comment">//登录成功之后重定向到首页</span></span><br><span class="line">                <span class="variable language_">this</span>.<span class="property">loading</span> = <span class="literal">false</span></span><br><span class="line">                <span class="comment">// this.$router.push(&#123; path: this.redirect || &#x27;/&#x27; &#125;)</span></span><br><span class="line">            &#125;).<span class="title function_">catch</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">                <span class="variable language_">this</span>.<span class="property">loading</span> = <span class="literal">false</span></span><br><span class="line">            &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>this.$store.dispatch(‘Login’, this.loginForm)来调取store里的user.js的login方法，从而要更新。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/VUE/" rel="tag"># VUE</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/11/03/getFile/" rel="prev" title="JS获取某文件夹里的.js文件">
+      <i class="fa fa-chevron-left"></i> JS获取某文件夹里的.js文件
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC81NjA4OS8zMjU1Mg=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Qin QiWei</p>
+  <div class="site-description" itemprop="description">have a nice day</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Qin QiWei</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+</body>
+</html>
+
+
+
+   <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas>
+   <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script>
+   <script type="text/javascript" src="/js/src/fireworks.js"></script>
+
